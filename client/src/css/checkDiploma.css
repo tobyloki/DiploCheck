@@ -292,7 +292,7 @@ img, svg {
 #NameDiv {
     margin: auto;
     position: absolute;
-    left: 16%;
+    left: 17%;
     right: 19%;
     text-align: center;
     top: 34%;
@@ -306,21 +306,30 @@ img, svg {
 
 .noRight {
     margin-right: 0px;
-    width: 75%;
-    height: 45%;
+    width: 60%;
+    height: 100%;
     /* margin-left: 12.5%; */
-    font-size: 12px;
+    font-size: 22px;
     border-radius: 5px;
     text-align: right;
     position:relative;
-    margin-left: 26.5%;
+    margin-left: 40%;
 }
 .noLeft {
     margin-left: 0px;
-    width: 75%;
-    height: 45%;
+    width: 60%;
+    height: 95%;
     /* margin-left: 12.5%; */
-    font-size: 12px;
+    font-size: 22px;
     border-radius: 5px;
 }
 
+.pushDown {
+    margin-top: 10%;
+    margin-left: 0px;
+    width: 75%;
+    height: 35%;
+    /* margin-left: 12.5%; */
+    font-size: 22px;
+    border-radius: 5px;
+}

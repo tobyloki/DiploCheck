@@ -5,6 +5,8 @@ import '../css/checkDiploma.css';
 import '../css/modal.css';
 import Web3 from 'web3';
 import Diploma from '../contracts/Diploma.json';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 import plaque from '../assets/img/plaque.png';
 import certImg from '../assets/img/CertImg.png';
@@ -22,8 +24,9 @@ class checkDiploma extends Component {
             id: 0,
             exists: false,
             name: 'No student',
-            graduationDate: 'No graduation date',
-            degree: 'No degree',
+            graduationDate: '3000-1-1',
+            newDate: new Date(),
+            degree: 'No Degree',
             college: 'No college',
             major: 'No major',
             minor: 'No minor',
@@ -35,19 +38,12 @@ class checkDiploma extends Component {
     }
 
     handleClickEdit = async () => {
-        if (this.state.editing) {
+        if (this.state.editing && this.InputsAreValid() && this.props.contract != null) {
+            var temp = this.state.GPA;
+            this.setState({ GPA: Math.round(temp * 100) });
             console.log('sending updated student details');
-
-            // let gas = await this.props.contract.methods.Edit(this.state.id, this.state.name, this.state.graduationDate, this.state.degree, this.state.college, this.state.major, this.state.minor, this.state.GPA, this.state.credits, this.state.graduated, this.state.classesTaken).estimateGas({
-            //     from: this.props.account
-            // });
-            // let gasPrice = await this.props.web3.eth.getGasPrice();
-            // console.log('gas:', gas);
-            // console.log('gasPrice:', gasPrice);
-            let result = await this.props.contract.methods.Edit(this.state.id, this.state.name, this.state.graduationDate, this.state.degree, this.state.college, this.state.major, this.state.minor, this.state.GPA, this.state.credits, this.state.graduated, this.state.classesTaken).send({
-                from: this.props.account,
-                // gas: gas,
-                // gasPrice: gasPrice
+            let result = await this.props.contract.methods.Edit(this.state.id, this.state.name, this.state.graduationDate, this.state.degree, this.state.college, this.state.major, this.state.minor, Math.round(this.state.GPA*100), this.state.credits, this.state.graduated, this.state.classesTaken).send({
+                from: this.props.account
             });
             console.log(result);
         } else {
@@ -60,7 +56,7 @@ class checkDiploma extends Component {
     }
 
     handleClickDelete = async () => {
-        window.alert("Are you sure you want to delete student: " + this.state.id);
+        await window.alert("Are you sure you want to delete student: " + this.state.id);
         let result = await this.props.contract.methods.Delete(this.state.id).send({
             from: this.props.account
         });
@@ -147,7 +143,7 @@ class checkDiploma extends Component {
         } else {
             return (
                 <div>
-                    <p className="WhiteUnderlined">Has Not Graduated</p>
+                    <p className="WhiteUnderlined">Has NOT Graduated</p>
                 </div>
             );
         }
@@ -173,6 +169,50 @@ class checkDiploma extends Component {
         }
     }
 
+    InputsAreValid = () => {
+        console.log("inputsarevalid is called");
+        var NameInput = this.state.name
+        //var graddateInput = document.getElementById("graduation-date");
+        var degreeInput = this.state.degree;
+        var collegeInput = document.getElementById("college");
+        var majorInput = document.getElementById("major");
+        var minorInput = document.getElementById("minor");
+        var gpaInput = document.getElementById("gpa");
+        var creditsInput = document.getElementById("credits");
+        var classesInput = document.getElementById("classestaken");
+        var selected = [];
+        for (var option of classesInput.options) {
+            if (option.selected)
+                selected.push(option.value);
+        }
+        this.setState({ classesTaken: selected.toString() });
+
+        console.log(this.state.classesTaken);
+
+        if (selected.toString() == "")
+            alert("Need atleast 1 class chosen");
+        else if (majorInput.value == "true")
+            alert("majorinput");
+        else if (minorInput.value == "true")
+            alert("minorinput");
+        else if (gpaInput.value == null || gpaInput.value == "" || isNaN(gpaInput.value))
+            alert("gpainput");
+        else if (creditsInput.value == null || creditsInput.value == "" || isNaN(creditsInput.value))
+            alert("creditsnput");
+        else if (classesInput.value == "Select all class taken")
+            alert("classesinput");
+        else if (collegeInput.value == "default")
+            alert("Collegeinput");
+        else if (degreeInput.value == "default")
+            alert("degreeinput");
+        else if (NameInput.value == "Name")
+            alert("Nameinput");
+        else {
+            return true;
+        }
+        return false;
+    }
+
     render() {
         return (
             <div>
@@ -194,7 +234,7 @@ class checkDiploma extends Component {
                                     <div style={{ position: 'absolute', width: '50%', display: 'inline-block', height: 'inherit', bottom: 0 }}>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control dataEntry" type="name" name="student-name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} /> :
+                                                <input className="form-control pushDown container" type="text" id="name" value={this.state.name} onChange={e => this.setState({ name: e.target.value })} /> :
                                                 <p className="LargeWhite">{this.state.name}</p>
                                         }
                                         <p className="TinyWhite">{this.state.id}</p>
@@ -217,7 +257,15 @@ class checkDiploma extends Component {
                                         <p className="WhiteUnderlined">Degree</p>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noRight" type="name" name="student-degree" value={this.state.degree} onChange={e => this.setState({ degree: e.target.value })} /> :
+                                                <div>
+                                                    <select className="form-control noRight" id="degree" value={this.state.degree} onChange={e => this.setState({ degree: e.target.value })}>
+                                                    <optgroup label="This is a group">
+                                                        <option value="default" selected>&lt;Select degree&gt;</option>
+                                                        <option value="Associate Degree">Associate's</option>
+                                                        <option value="Bachelor's Degree">Bachelor's</option>
+                                                        <option value="Graduate Degree">Graduate's Degree</option>
+                                                    </optgroup>
+                                                </select> </div> :
                                                 <p className="smallwhite">{this.state.degree}</p>
                                         }
                                     </div>
@@ -226,7 +274,56 @@ class checkDiploma extends Component {
                                         <p className="WhiteUnderlined">Major</p>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noRight" type="name" name="student-major" value={this.state.major} onChange={e => this.setState({ major: e.target.value })} /> :
+                                                <div><select className="form-control noRight" id="major" value={this.state.major}  onChange={e => this.setState({ major: e.target.value })}>
+                                                    <optgroup label="This is a group">
+                                                        <option value selected>&lt;Select major&gt;</option>
+                                                        <option value="Agricultural and food business management">Agricultural and food business management</option>
+                                                        <option value="Animal Sciences">Animal Sciences</option>
+                                                        <option value="Anthropology">Anthropology</option>
+                                                        <option value="Biology">Biology</option>
+                                                        <option value="Botany">Botany</option>
+                                                        <option value="Business">Business</option>
+                                                        <option value="Chemistry">Chemistry</option>
+                                                        <option value="Comparative international agriculture">Comparative international agriculture</option>
+                                                        <option value="Computer Science">Computer Science</option>
+                                                        <option value="Earth sciences">Earth sciences</option>
+                                                        <option value="Economics">Economics</option>
+                                                        <option value="Education">Education</option>
+                                                        <option value="Environmental economics and policy">Environmental economics and policy</option>
+                                                        <option value="Environmental law and policy">Environmental law and policy</option>
+                                                        <option value="Environmental and occupational health">Environmental and occupational health</option>
+                                                        <option value="Environmental sciences">Environmental sciences</option>
+                                                        <option value="Ethnic studies">Ethnic studies</option>
+                                                        <option value="Fisheries and wildlife sciences">Fisheries and wildlife sciences</option>
+                                                        <option value="French">French</option>
+                                                        <option value="Geography">Geography</option>
+                                                        <option value="German">German</option>
+                                                        <option value="Global health">Global health</option>
+                                                        <option value="Graphic design">Graphic design</option>
+                                                        <option value="Health management and policy">Health management and policy</option>
+                                                        <option value="History">History</option>
+                                                        <option value="Horticulture">Horticulture</option>
+                                                        <option value="Human development and family sciences">Human development and family sciences</option>
+                                                        <option value="Leadership">Leadership</option>
+                                                        <option value="Marine conservation and management">Marine conservation and management</option>
+                                                        <option value="Microbiology">Microbiology</option>
+                                                        <option value="Military history">Military history</option>
+                                                        <option value="Natural resources">Natural resources</option>
+                                                        <option value="Organizational leadership">Organizational leadership</option>
+                                                        <option value="Philosophy">Philosophy</option>
+                                                        <option value="Political science">Political science</option>
+                                                        <option value="Popular music studies">Popular music studies</option>
+                                                        <option value="Psychology">Psychology</option>
+                                                        <option value="Public health">Public health</option>
+                                                        <option value="Queer studies">Queer studies</option>
+                                                        <option value="Religious studies">Religious studies</option>
+                                                        <option value="Spanish">Spanish</option>
+                                                        <option value="Sociology">Sociology</option>
+                                                        <option value="Sustainability">Sustainability</option>
+                                                        <option value="Women, gender, and sexuality studies">Women, gender, and sexuality studies</option>
+                                                        <option value="Writing">Writing</option>
+                                                    </optgroup>
+                                                </select></div>:
                                                 <p className="smallwhite">{this.state.major}</p>
                                         }
                                     </div>
@@ -235,7 +332,7 @@ class checkDiploma extends Component {
                                         <p className="WhiteUnderlined">Cumulative GPA</p>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noRight" type="name" name="student-GPA" value={this.state.GPA} onChange={e => this.setState({ GPA: e.target.value })} /> :
+                                                <div ><input type="checkbox" className="form-control noRight" type="number" id="gpa" max={4.0} min={0.0} step="0.01" onChange={e => this.setState({ GPA: e.target.value })}/></div>:
                                                 <p className="smallwhite">{this.calculateGPA()}</p>
                                         }
                                     </div>
@@ -251,7 +348,19 @@ class checkDiploma extends Component {
                                                 <p className="smallwhite">{this.calculateGPA()}</p>
                                                 {
                                                     this.state.editing ?
-                                                        <input className="form-control noRight" type="name" name="student-classesTaken" value={this.state.classesTaken} onChange={e => this.setState({ classesTaken: e.target.value })} /> :
+                                                        <div ><select style={{ marginLeft: '0px'}} className="form-control noRight " multiple id="classestaken">
+                                                            <optgroup label="Baccore">
+                                                                <option value="WR 121">WR 121</option>
+                                                                <option value="HHS 231">HHS 231</option>
+                                                                <option value="MTH 105">MTH 105</option>
+                                                                <option value="COMM 111">COMM 111</option>
+                                                                <option value="BI 101">BI 101</option>
+                                                                <option value="CH 122">CH 122</option>
+                                                                <option value="ECON 201">ECON 201</option>
+                                                                <option value="HST 101">HST 101</option>
+                                                                <option value="CS 391">CS 391</option>
+                                                            </optgroup>
+                                                        </select></div> :
                                                         <p>{this.state.classesTaken}</p>
                                                 }
                                             </div>
@@ -294,7 +403,10 @@ class checkDiploma extends Component {
                                         {this.getGraduationDate()}
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noLeft" type="name" name="student-graduationDate" value={this.state.graduationDate} onChange={e => this.setState({ graduationDate: e.target.value })} /> :
+                                                <div className="holder noLeft" bottom="15%">
+                                                    <DatePicker  style={{ marginLeft: '0px', Width: '25vw' }}  className="form-control noLeft container" selected={ this.state.newDate} onChange={date => this.setState({ newDate: date })} />
+                                                </div>
+                                                 :
                                                 <p className="smallwhite">{this.state.graduationDate}</p>
                                         }
                                     </div>
@@ -303,7 +415,23 @@ class checkDiploma extends Component {
                                         <p className="WhiteUnderlined">College</p>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noLeft" type="name" name="student-college" value={this.state.college} onChange={e => this.setState({ college: e.target.value })} /> :
+                                                <div className="holder noLeft" margin-top="6%"><select className="form-control noLeft" id="college" value={this.state.college} onChange={e => this.setState({ college: e.target.value })}>
+                                                    <optgroup label="This is a group">
+                                                        <option value="default" selected>&lt;Select college&gt;</option>
+                                                        <option value="Agricultural Sciences">Agricultural Sciences</option>
+                                                        <option value="Business">Business</option>
+                                                        <option value="Earth, Ocean, and Atmospheric Sciences">Earth, Ocean, and Atmospheric Sciences</option>
+                                                        <option value="Education">Education</option>
+                                                        <option value="Engineering">Engineering</option>
+                                                        <option value="Forestry">Forestry</option>
+                                                        <option value="Graduate School">Graduate School</option>
+                                                        <option value="Liberal Arts">Liberal Arts</option>
+                                                        <option value="Pharmacy">Pharmacy</option>
+                                                        <option value="Public Health and Human Sciences">Public Health and Human Sciences</option>
+                                                        <option value="Science">Science</option>
+                                                        <option value>Veterinary Medicine</option>
+                                                    </optgroup>
+                                                </select></div>:
                                                 <p className="smallwhite">{this.state.college}</p>
                                         }
                                     </div>
@@ -312,7 +440,56 @@ class checkDiploma extends Component {
                                         <p className="WhiteUnderlined">Minor</p>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noLeft" type="name" name="student-minor" value={this.state.minor} onChange={e => this.setState({ minor: e.target.value })} /> :
+                                                <div className="holder noLeft"><select className="form-control noLeft" id="minor" value={this.state.minor} onChange={e => this.setState({ minor: e.target.value })}>
+                                                    <optgroup label="This is a group">
+                                                        <option value selected>&lt;Select minor&gt;</option>
+                                                        <option value="Agricultural and food business management">Agricultural and food business management</option>
+                                                        <option value="Animal Sciences">Animal Sciences</option>
+                                                        <option value="Anthropology">Anthropology</option>
+                                                        <option value="Biology">Biology</option>
+                                                        <option value="Botany">Botany</option>
+                                                        <option value="Business">Business</option>
+                                                        <option value="Chemistry">Chemistry</option>
+                                                        <option value="Comparative international agriculture">Comparative international agriculture</option>
+                                                        <option value="Computer Science">Computer Science</option>
+                                                        <option value="Eath sciences">Earth sciences</option>
+                                                        <option value="Economics">Economics</option>
+                                                        <option value="Education">Education</option>
+                                                        <option value="Environmental economics and policy">Environmental economics and policy</option>
+                                                        <option value="Environmental law and policy">Environmental law and policy</option>
+                                                        <option value="Environmental and occupational health">Environmental and occupational health</option>
+                                                        <option value="Environmental sciences">Environmental sciences</option>
+                                                        <option value="Ethnic studies">Ethnic studies</option>
+                                                        <option value="Fisheries and wildlife sciences">Fisheries and wildlife sciences</option>
+                                                        <option value="French">French</option>
+                                                        <option value="Geography">Geography</option>
+                                                        <option value="German">German</option>
+                                                        <option value="Global health">Global health</option>
+                                                        <option value="Graphic design">Graphic design</option>
+                                                        <option value="Health management and policy">Health management and policy</option>
+                                                        <option value="History">History</option>
+                                                        <option value="Horticulture">Horticulture</option>
+                                                        <option value="Human development and family sciences">Human development and family sciences</option>
+                                                        <option value="Leadership">Leadership</option>
+                                                        <option value="Marine conservation and management">Marine conservation and management</option>
+                                                        <option value="Microbiology">Microbiology</option>
+                                                        <option value="Military history">Military history</option>
+                                                        <option value="Natural resources">Natural resources</option>
+                                                        <option value="Organizational leadership">Organizational leadership</option>
+                                                        <option value="Philosophy">Philosophy</option>
+                                                        <option value="Political science">Political science</option>
+                                                        <option value="Popular music studies">Popular music studies</option>
+                                                        <option value="Psychology">Psychology</option>
+                                                        <option value="Public health">Public health</option>
+                                                        <option value="Queer studies">Queer studies</option>
+                                                        <option value="Religious studies">Religious studies</option>
+                                                        <option value="Spanish">Spanish</option>
+                                                        <option value="Sociology">Sociology</option>
+                                                        <option value="Sustainability">Sustainability</option>
+                                                        <option value="Women, gender, and sexuality studies">Women, gender, and sexuality studies</option>
+                                                        <option value="Writing">Writing</option>
+                                                    </optgroup>
+                                                </select></div>:
                                                 <p className="smallwhite">{this.state.minor}</p>
                                         }
                                     </div>
@@ -321,8 +498,8 @@ class checkDiploma extends Component {
                                         <p className="WhiteUnderlined">Credits Completed</p>
                                         {
                                             this.state.editing ?
-                                                <input className="form-control noLeft " type="name" name="student-credits" value={this.state.credits} onChange={e => this.setState({ credits: e.target.value })} /> :
-                                                <p className="smallwhite">{this.state.credits}</p>
+                                                <div className="holder noLeft"><input className="form-control noLeft" type="number" id="credits" min={0} value={this.state.credits} onChange={e => this.setState({ credits: e.target.value })}/></div>
+                                                : <p className="smallwhite">{this.state.credits}</p>
                                         }
                                     </div>
                                     <div className="Infopoints" />

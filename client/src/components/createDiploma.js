@@ -152,7 +152,7 @@ class createDiploma extends Component {
                   <p style={{textAlign: 'center', color: 'rgb(255,255,255)', fontSize: '18px', fontWeight: 'bold'}}>Add new graduating student</p>
                   <p style={{marginTop: '-2%', marginLeft: '18%', color: 'rgb(255,255,255)', marginRight: '18%', fontSize: '12px', textAlign: 'center', marginBottom: '0%'}}>Enter the new graduating student's information listed here. Once you are done click the 'confirm' button.</p>
                             </div>
-                            <div className="holder" bottom="5%"><label className="category container">Name</label><input className="form-control dataEntry container" type="text" defaultValue="name" id="name" /></div>
+                            <div className="holder" bottom="5%"><label className="category container">Name</label><input className="form-control dataEntry container" type="text" id="name" /></div>
                 <div className="holder" bottom="5%"><label className="category container">Id</label><input className="form-control dataEntry container" type="number" max={999999999} min={100000000} defaultValue="Id (9-digits)" id="id" /></div>
 
                             <div className="holder" bottom="15%"><label className="category container">Graduation Date</label>
