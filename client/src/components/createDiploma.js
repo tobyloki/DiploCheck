@@ -25,7 +25,10 @@ class createDiploma extends Component {
             console.log(admin);
 
             let form = document.getElementById('form');
-            form.style.display = admin ? 'inline' : 'none';
+            form.style.visibility = admin ? 'visible' : 'hidden';
+
+            if(!admin)
+              window.alert("You do not have permission to access this page.");
         }
     }
 
@@ -137,7 +140,7 @@ class createDiploma extends Component {
   render() {
     return (
       <div className="add-grad-page">
-      <form id='form' onSubmit={this.submit}>
+      <form id='form' style={{visibility: 'hidden'}} onSubmit={this.submit}>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.jquery.min.js"></script>
         <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet" />

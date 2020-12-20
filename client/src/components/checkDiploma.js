@@ -22,8 +22,8 @@ class checkDiploma extends Component {
             id: 0,
             exists: false,
             name: 'No student',
-            graduationDate: '3000-1-1',
-            degree: 'No Degree',
+            graduationDate: 'No graduation date',
+            degree: 'No degree',
             college: 'No college',
             major: 'No major',
             minor: 'No minor',
@@ -37,8 +37,17 @@ class checkDiploma extends Component {
     handleClickEdit = async () => {
         if (this.state.editing) {
             console.log('sending updated student details');
+
+            // let gas = await this.props.contract.methods.Edit(this.state.id, this.state.name, this.state.graduationDate, this.state.degree, this.state.college, this.state.major, this.state.minor, this.state.GPA, this.state.credits, this.state.graduated, this.state.classesTaken).estimateGas({
+            //     from: this.props.account
+            // });
+            // let gasPrice = await this.props.web3.eth.getGasPrice();
+            // console.log('gas:', gas);
+            // console.log('gasPrice:', gasPrice);
             let result = await this.props.contract.methods.Edit(this.state.id, this.state.name, this.state.graduationDate, this.state.degree, this.state.college, this.state.major, this.state.minor, this.state.GPA, this.state.credits, this.state.graduated, this.state.classesTaken).send({
-                from: this.props.account
+                from: this.props.account,
+                // gas: gas,
+                // gasPrice: gasPrice
             });
             console.log(result);
         } else {
@@ -51,7 +60,7 @@ class checkDiploma extends Component {
     }
 
     handleClickDelete = async () => {
-        window.alert("button wants to delete student " + this.state.id);
+        window.alert("Are you sure you want to delete student: " + this.state.id);
         let result = await this.props.contract.methods.Delete(this.state.id).send({
             from: this.props.account
         });
@@ -76,6 +85,18 @@ class checkDiploma extends Component {
     async componentWillReceiveProps(nextProps) {
         console.log('test', nextProps)
         console.log(nextProps.contract);
+
+        if (nextProps.contract != null && nextProps.account != null) {
+            console.log(nextProps.account);
+            let admin = await nextProps.contract.methods.admins(nextProps.account).call();
+            console.log(admin);
+
+            let adminEdit = document.getElementById('adminEdit');
+            let adminDelete = document.getElementById('adminDelete');
+            adminEdit.style.visibility = admin ? 'visible' : 'hidden';
+            adminDelete.style.visibility = admin ? 'visible' : 'hidden';
+        }
+
         if (nextProps.contract != null) {
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
@@ -126,7 +147,7 @@ class checkDiploma extends Component {
         } else {
             return (
                 <div>
-                    <p className="WhiteUnderlined">Has NOT Graduated</p>
+                    <p className="WhiteUnderlined">Has Not Graduated</p>
                 </div>
             );
         }
@@ -178,10 +199,10 @@ class checkDiploma extends Component {
                                         }
                                         <p className="TinyWhite">{this.state.id}</p>
                                     </div>
-                                    <button className="btn btn-primary clearbtn" type="button" style={{ position: 'absolute', bottom: '5%', left: '55%', borderColor: '#00000000', background: '#00000000' }} onClick={this.handleClickEdit}><img src={edit} />
+                                    <button id='adminEdit' className="btn btn-primary clearbtn" type="button" style={{ position: 'absolute', bottom: '5%', left: '55%', borderColor: '#00000000', background: '#00000000' }} onClick={this.handleClickEdit}><img src={edit} />
                                         {this.state.editing ? 'DONE' : 'EDIT'}
                                     </button>
-                                    <button className="btn btn-primary clearbtn" type="button" style={{ position: 'absolute', bottom: '5%', left: '70%', background: '#00000000', borderColor: '#00000000' }} onClick={this.handleClickDelete}><img src={deleteIcon} /></button>
+                                    <button id='adminDelete' className="btn btn-primary clearbtn" type="button" style={{ position: 'absolute', bottom: '5%', left: '70%', background: '#00000000', borderColor: '#00000000' }} onClick={this.handleClickDelete}><img src={deleteIcon} /></button>
                                     <div />
                                 </div>
                                 <div className="smallcenter bottomsmallcenter"><img src={line1} /></div>
