@@ -15,6 +15,7 @@ Submitted to the [BeaverHacks Winter 2021](https://beaverhacks-winter-2021.devpo
 #### Frontend
 - [React](https://reactjs.org/)
 - [Bootstrap](https://getbootstrap.com/)
+- [Redux](https://react-redux.js.org/)
 - [Web3](https://web3js.readthedocs.io/en/v1.3.0/)
 
 ## Installation
