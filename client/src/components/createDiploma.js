@@ -128,7 +128,7 @@ class createDiploma extends Component {
       //    console.log('gasPrice:', gasPrice);
           // console.log('gasPrice:', window.web3.utils.toWei('20', 'gwei'))
                                                         //Add(uint id, string memory _name, string memory _date, string memory _degree, string memory _college, string memory _major, string memory _minor, uint _GPA, uint _credits, bool _graduated, string memory classes) 
-          let result = await this.props.contract.methods.Add( id, name, "graddate", degree, college, major, minor, gpa, credits, graduated, selected.toString()).send({
+          let result = await this.props.contract.methods.Add( id, name, gradate, degree, college, major, minor, gpa, credits, graduated, selected.toString()).send({
               from: this.props.account
           });
           console.log(result);
