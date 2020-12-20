@@ -1,0 +1,291 @@
+.container.OSUImageContainer {
+  margin-left: 30%;
+}
+
+#navbarNav {
+  margin-right: 25%;
+}
+
+#AvatarImg {
+  width: 50px;
+}
+
+#SearchImg {
+  width: 50px;
+}
+
+.BoldandLarge {
+  font-size: x-large;
+  text-align: center;
+  display: table-cell;
+  padding-top: 10%;
+}
+
+.osuColoring {
+  background: linear-gradient(120deg, #d73f09, #d73f09);
+}
+
+#OsuImage {
+}
+
+#OsuImage {
+  width: 200px;
+  background-color: white;
+}
+
+.Relative {
+  position: relative;
+}
+
+.BottomOfParent {
+  position: absolute;
+  bottom: 0px;
+}
+
+#CertificateBackdrop {
+  height: 92vh;
+  background: rgba(255, 255, 255, 0.5);
+  position: absolute;
+  top: initial;
+  left: 0;
+  right: 0;
+}
+
+#CertContainer {
+  position: relative;
+  height: 100%;
+  /*top: 50%;*/
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  width: 70vw;
+  margin: 0 auto;
+  /*background: #f6e9c5;*/
+}
+
+#CertContain {
+  background: #f6e9e5;
+  height: 100%;
+  position: relative;
+}
+
+#CertImgContainer1 {
+  height: 100%;
+  position: absolute;
+  margin-top: 3vh;
+  /*padding-bottom: 3vh;*/
+  /*padding-top: 3vh;*/
+  width: 73%;
+  margin-bottom: 3vh;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+#PlacqueImg {
+  position: absolute;
+  /*display: inline;*/
+  width: 100%;
+  /*position: relative;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  /*margin: auto;*/
+}
+
+#CertImgContainer2 {
+  /*height: 100%;*/
+  position: absolute;
+  width: 61%;
+  /*margin-bottom: 3vh;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  height: 75%;
+  /*margin-right: 10px;*/
+}
+
+#CertImg {
+  position: absolute;
+  display: a;
+  width: 90%;
+  /*padding-top: 13%;*/
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
+  /*padding-bottom: 15%;*/
+  /*padding-left: 13.5%;*/
+  left: 16px;
+  top: 30px;
+}
+
+.headerbtn {
+  background-color: rgb(215,63,9);
+}
+
+.headerbtn.focus, .headerbtn:focus, .headerbtn:hover {
+  color: #fff;
+  background-color: rgb(215,63,9);
+  border-color: rgb(215,63,9);
+}
+
+#InfoBackdrop {
+  height: 190vh;
+  background-image: url(../assets/img/clouds.png);
+  background-repeat: no-repeat, no-repeat;
+  background-size: cover, cover;
+}
+
+#DarkerBackdrop {
+  background-color: #00000076;
+  height: 190vh;
+}
+
+#student_name_options {
+  height: 20vh;
+}
+
+#student_info {
+  height: 170vh;
+}
+
+.inlinepair {
+  height: inherit;
+  width: 48.3vw;
+  display: inline-block;
+  /*position: fixed;*/
+  /*top: 0;*/
+  vertical-align: top;
+}
+
+.inlinesmall {
+  display: inline-block;
+  height: inherit;
+  width: 2vw;
+  top: initial;
+  vertical-align: top;
+}
+
+#student_courses {
+  height: 20vh;
+}
+
+img, svg {
+}
+
+#greenline {
+  vertical-align: initial;
+  margin: 0 auto;
+  width: 0.11%;
+  display: block;
+  position: absolute;
+  left: 50%;
+}
+
+..smallcenter {
+}
+
+.smallcenter {
+  display: block;
+  width: 50%;
+  height: 9vh;
+  margin: 0 auto;
+}
+
+.topsmallcenter {
+  height: 14vh;
+  position: relative;
+}
+
+.bottomsmallcenter {
+  height: 2vh;
+  position: relative;
+}
+
+.btn .btn-primary .clearbtn {
+}
+
+.btn .btn-primary .clearbtn {
+  background: #00000000;
+  border-color: #00000000;
+  background-color: #00000000;
+}
+
+.Infopoints {
+  height: 18.5vh;
+  /*width: 60%;*/
+  /*position: relative;*/
+}
+
+.moveright {
+  text-align: right;
+}
+
+.WhiteUnderlined {
+  color: white;
+  text-decoration: underline;
+  font-size: xx-large;
+  margin-bottom: 0;
+}
+
+.smallwhite {
+  font-size: x-large;
+  color: white;
+}
+
+.smallorangelink {
+  color: rgb(247,126,58);
+  font-size: x-large;
+  text-decoration: underline;
+}
+
+.smallorangelink:hover {
+  color: rgb(247,126,58);
+  font-size: 1.55rem;
+  text-decoration: underline;
+}
+
+.portfolio-navbar .navbar-nav .nav-item {
+  padding-right: 1rem;
+}
+
+#CertificateFinalBackdrop {
+  height: 92vh;
+  background-image: url(../assets/img/grad.png);
+}
+
+.LargeWhite {
+  font-size: 3.5rem;
+  color: white;
+  position: absolute;
+  bottom: 0;
+}
+
+.TinyWhite {
+  font-size: x-large;
+  color: white;
+  bottom: 0;
+  position: absolute;
+  margin: 0;
+}
+
+.padright {
+  padding-right: 8px;
+}
+
+.TypographicContainer {
+  /*justify-content: right;*/
+  text-align: right;
+  display: table-caption;
+}
+
+.Typographic {
+  color: #00ff11;
+  font-size: 3.2rem;
+  margin-top: -17px;
+  margin-left: 7px;
+}
+

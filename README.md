@@ -1,1 +1,2 @@
-# DiploCheck
+# DiplomaDapp
+
