@@ -43,7 +43,7 @@
 }
 
 #CertificateBackdrop {
-  height: 92vh;
+  height: 100vh;
   background: rgba(255, 255, 255, 0.5);
   position: absolute;
   top: initial;
@@ -55,7 +55,7 @@
   position: relative;
   height: 100%;
   /*top: 50%;*/
-  padding-top: 5vh;
+  padding-top: 10vh;
   padding-bottom: 5vh;
   width: 70vw;
   margin: 0 auto;
@@ -74,7 +74,7 @@
   margin-top: 3vh;
   /*padding-bottom: 3vh;*/
   /*padding-top: 3vh;*/
-  width: 73%;
+  width: 68%;
   margin-bottom: 3vh;
   margin-left: auto;
   margin-right: auto;
@@ -105,21 +105,20 @@
   top: 0;
   bottom: 0;
   overflow: auto;
-  height: 75%;
+  height: 81%;
   /*margin-right: 10px;*/
 }
 
 #CertImg {
   position: absolute;
-  display: a;
-  width: 90%;
+  width: 82%;
   /*padding-top: 13%;*/
   /*margin-left: auto;*/
   /*margin-right: auto;*/
   /*padding-bottom: 15%;*/
   /*padding-left: 13.5%;*/
-  left: 16px;
-  top: 30px;
+  left: 60px;
+  top: 50px;
 }
 
 .headerbtn {
@@ -178,8 +177,9 @@ img, svg {
 
 #greenline {
   vertical-align: initial;
+  padding-top: 20px;
   margin: 0 auto;
-  width: 0.11%;
+  width: 0.098%;
   display: block;
   position: absolute;
   left: 50%;
@@ -253,7 +253,7 @@ img, svg {
 }
 
 #CertificateFinalBackdrop {
-  height: 92vh;
+  height: 100vh;
   background-image: url(../assets/img/grad.png);
 }
 
@@ -286,6 +286,41 @@ img, svg {
   color: #00ff11;
   font-size: 3.2rem;
   margin-top: -17px;
-  margin-left: 7px;
+  margin-left: 14px;
+}
+
+#NameDiv {
+    margin: auto;
+    position: absolute;
+    left: 15%;
+    right: 19%;
+    text-align: center;
+    top: 33%;
+    font-family: 'Brush Script MT';
+    color: rgb(50, 50, 50);
+    text-shadow: 0px 2px rgba(90, 90, 90, 0.25);
+}
+#StudentCertName{
+    font-size: 2.15rem;
+}
+
+.noRight {
+    margin-right: 0px;
+    width: 75%;
+    height: 45%;
+    /* margin-left: 12.5%; */
+    font-size: 12px;
+    border-radius: 5px;
+    text-align: right;
+    position:relative;
+    margin-left: 26.5%;
+}
+.noLeft {
+    margin-left: 0px;
+    width: 75%;
+    height: 45%;
+    /* margin-left: 12.5%; */
+    font-size: 12px;
+    border-radius: 5px;
 }
 
